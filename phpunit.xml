@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
+        debug="false"
         backupGlobals="true"
         colors="true"
         stopOnFailure="false"
