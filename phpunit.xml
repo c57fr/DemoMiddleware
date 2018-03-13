@@ -6,7 +6,7 @@
         bootstrap="./vendor/autoload.php">
 
     <testsuite name="Gc7 Test Suite">
-        <directory suffix=".php">./tests</directory>
+        <directory suffix=".php">tests</directory>
     </testsuite>
 
     <filter>
@@ -17,10 +17,6 @@
                 <directory>vendor</directory>
             </exclude>
         </whitelist>
-        <blacklist>
-            <directory>reserveoSrc</directory>
-            <directory>reserveoTests</directory>
-        </blacklist>
     </filter>
 
 </phpunit>

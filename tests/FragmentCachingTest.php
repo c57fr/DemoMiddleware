@@ -1,6 +1,6 @@
 <?php
 use Gc7\FragmentCaching;
-use Gc7\CacheAdapterInterface;
+use App\CacheAdapterInterface;
 use PHPUnit\Framework\TestCase;
 
 class FakeCacheAdapter implements CacheAdapterInterface {
