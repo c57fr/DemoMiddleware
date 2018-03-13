@@ -3,15 +3,25 @@ use Gc7\CsvFileIterator;
 use PHPUnit\Framework\TestCase;
 
 
+/**
+ * Class DataTest
+ */
 class DataTest extends TestCase {
   /**
    * @dataProvider additionProvider
    * @dataProvider additionProvider2
+   *
+   * @param $a
+   * @param $b
+   * @param $expected
    */
   public function testAdd($a, $b, $expected) {
-    $this->assertSame((int)$expected, $a + $b);
+    static::assertSame((int)$expected, $a + $b);
   }
 
+  /**
+   * @return array
+   */
   public function additionProvider() {
     return [
       'adding zeros'  => [0, 0, 0],
@@ -21,9 +31,10 @@ class DataTest extends TestCase {
     ];
   }
 
+  /**
+   * @return CsvFileIterator
+   */
   public function additionProvider2() {
-    $data = new CsvFileIterator('src/data.csv');
-    var_dump($data->file);
-    return $data;
+    return new CsvFileIterator('src/data.csv');
   }
 }
