@@ -26,6 +26,7 @@ class DatabaseTest extends TestCase {
     $rep = $pdo->fetchAll();
     var_dump($rep);
     $this->assertArrayHasKey('username', $rep[0]);
+    $this->assertEquals('demo', $rep[0]['username']);
   }
 
 
