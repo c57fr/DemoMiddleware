@@ -15,7 +15,7 @@ class InexistingFileIncludeTest extends TestCase {
   /**
    * @expectedException PHPUnit\Framework\Error\Error
    */
-  public function testFailOPe() {
+  public function testFailMathOperation() {
     $a = 4/0;
   }
 
