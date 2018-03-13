@@ -13,6 +13,22 @@ class FakeCacheAdapter implements CacheAdapterInterface {
   }
 }
 
+class FakeModel {
+  private $key;
+
+  public function __construct($key) {
+    $this->key = $key;
+  }
+
+  public function cache_key():string {
+    return $this->key;
+  }
+
+  public function __toString():string {
+    return $this->cache_key();
+  }
+}
+
 class FragmentCachingTest extends TestCase {
 
   public function testCacheWithCache() {
@@ -57,7 +73,29 @@ class FragmentCachingTest extends TestCase {
     $cache->cache(['test', 'je', 'suis'], function () {
       return FALSE;
     });
+  }
 
+  public function testKeyWithBooleanTrue() {
+    $cache = $this->getInstanceWithExpectedGet('test-1-suis');
+    $cache->cache(['test', TRUE, 'suis'], function () {
+      return FALSE;
+    });
+  }
+
+  public function testKeyWithBooleanFalse() {
+    $cache = $this->getInstanceWithExpectedGet('test-0-suis');
+    $cache->cache(['test', FALSE, 'suis'], function () {
+      return FALSE;
+    });
+  }
+
+  public function testKeyWithObject() {
+
+    $fake = new FakeModel('model');
+    $cache = $this->getInstanceWithExpectedGet('test-model-suis');
+    $cache->cache(['test', $fake, 'suis'], function () {
+      return FALSE;
+    });
   }
 
   public function getInstanceWithOutExpectedGet($value = FALSE) {

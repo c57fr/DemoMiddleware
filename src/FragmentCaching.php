@@ -20,14 +20,24 @@ class FragmentCaching {
     $this->cache = $cache;
   }
 
-  private function hashKeys($key) {
-    if (is_string($key)) {
-      return $key;
+  private function hashKeys($keys) {
+    if (is_string($keys)) {
+      return $keys;
     } else {
-      return implode('-', $key);
+      $return = [];
+      foreach ($keys as $k) {
+        array_push($return,
+                   $this->hashkey($k));
+      }
+      return implode('-', $return);
     }
   }
 
+  private function hashKey($key) {
+    if (is_bool($key))
+      return $key ? 1 : 0;
+    else return $key;
+  }
 
   public function cache($key, callable $callback) {
     $key = $this->hashKeys($key);

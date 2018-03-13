@@ -1,6 +1,5 @@
 <?php namespace App;
 
-use Interop\Http\Server\MiddlewareInterface;
 use Interop\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -8,7 +7,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * Class PoweredByMiddleware
  * @package App
  */
-class PoweredByMiddleware implements MiddlewareInterface {
+class PoweredByMiddlewar {
     /**
      * Process an incoming server request and return a response, optionally delegating
      * response creation to a handler.

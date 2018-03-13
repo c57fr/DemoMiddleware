@@ -10,6 +10,8 @@ use Psr\Http\Message\ServerRequestInterface;
  * Class Dispatcher
  * @property Response response
  * @package App
+ *
+ * @code Coverage Ignore
  */
 class Dispatcher implements RequestHandlerInterface {
   /**

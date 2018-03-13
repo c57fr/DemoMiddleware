@@ -5,19 +5,22 @@
         stopOnFailure="false"
         bootstrap="./vendor/autoload.php">
 
-    <filter>
-        <whitelist>
-            <directory>src</directory>
-            <exclude>
-                <directory>./public</directory>
-                <directory>./vendor</directory>
-                <directory>./tests</directory>
-            </exclude>
-        </whitelist>
-    </filter>
-
     <testsuite name="Gc7 Test Suite">
         <directory suffix=".php">./tests</directory>
     </testsuite>
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src</directory>
+            <exclude>
+                <directory>public</directory>
+                <directory>vendor</directory>
+            </exclude>
+        </whitelist>
+        <blacklist>
+            <directory>reserveoSrc</directory>
+            <directory>reserveoTests</directory>
+        </blacklist>
+    </filter>
 
 </phpunit>
