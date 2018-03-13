@@ -20,7 +20,17 @@ class FragmentCaching {
     $this->cache = $cache;
   }
 
+  private function hashKeys($key) {
+    if (is_string($key)) {
+      return $key;
+    } else {
+      return implode('-', $key);
+    }
+  }
+
+
   public function cache($key, callable $callback) {
+    $key = $this->hashKeys($key);
     $value = $this->cache->get($key);
     if (!$value) {
       ob_start();

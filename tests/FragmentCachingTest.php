@@ -16,12 +16,7 @@ class FakeCacheAdapter implements CacheAdapterInterface {
 class FragmentCachingTest extends TestCase {
 
   public function testCacheWithCache() {
-    $cacheAdapter = $this->getMockBuilder(FakeCacheAdapter::class)
-      ->setMethods(['get'])
-      ->getMock();
-    $cacheAdapter->method('get')->willReturn('en cache');
-
-    $cache = new FragmentCaching($cacheAdapter);
+    $cache = $this->getInstanceWithOutExpectedGet('en cache');
 
     $this->expectOutputString('en cache');
 
@@ -31,12 +26,8 @@ class FragmentCachingTest extends TestCase {
   }
 
   public function testCacheWithOutCache() {
-    $cacheAdapter = $this->getMockBuilder(FakeCacheAdapter::class)
-      ->setMethods(['get'])
-      ->getMock();
-    $cacheAdapter->method('get')->willReturn(False);
 
-    $cache = new FragmentCaching($cacheAdapter);
+    $cache = $this->getInstanceWithOutExpectedGet();
 
     $this->expectOutputString('Salut !');
 
@@ -50,7 +41,7 @@ class FragmentCachingTest extends TestCase {
     $cacheAdapter = $this->getMockBuilder(FakeCacheAdapter::class)
       ->setMethods(['get', 'set'])
       ->getMock();
-    $cacheAdapter->method('get')->willReturn(false);
+    $cacheAdapter->method('get')->willReturn(FALSE);
 
     $cacheAdapter->expects($this->once())->method('set')->with('testCache', 'Salut !');
 
@@ -60,7 +51,33 @@ class FragmentCachingTest extends TestCase {
     });
 
   }
-  
+
+  public function testKeyWithArray() {
+    $cache = $this->getInstanceWithExpectedGet('test-je-suis');
+    $cache->cache(['test', 'je', 'suis'], function () {
+      return FALSE;
+    });
+
+  }
+
+  public function getInstanceWithOutExpectedGet($value = FALSE) {
+    $cacheAdapter = $this->getMockBuilder(FakeCacheAdapter::class)
+      ->setMethods(['get'])
+      ->getMock();
+    $cacheAdapter->method('get')->willReturn($value);
+
+    return new FragmentCaching($cacheAdapter);
+  }
+
+  public function getInstanceWithExpectedGet($value = FALSE) {
+    $cacheAdapter = $this->getMockBuilder(FakeCacheAdapter::class)
+      ->setMethods(['get'])
+      ->getMock();
+
+    $cacheAdapter->expects($this->once())->method('get')->with($value);
+
+    return new FragmentCaching($cacheAdapter);
+  }
 
 }
 
