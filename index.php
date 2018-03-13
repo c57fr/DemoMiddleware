@@ -10,4 +10,4 @@ require 'vendor/autoload.php';
 
 echo 'Page title: ' . Functions::pageTitle();
 
-?><a href="/src">Coverage</a>
+?><h2><a href="/cov" target="_blank">Coverage</a></h2>
