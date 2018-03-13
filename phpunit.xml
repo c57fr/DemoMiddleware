@@ -12,6 +12,7 @@
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">src</directory>
+            <directory>cov</directory>
             <exclude>
                 <directory>public</directory>
                 <directory>vendor</directory>

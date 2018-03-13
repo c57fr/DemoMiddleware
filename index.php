@@ -8,6 +8,8 @@ require 'vendor/autoload.php';
 //echo \Gc7\Math::double(21);
 
 
-echo 'Page title: ' . Functions::pageTitle();
+echo 'Page title: ' . Functions::pageTitle() . '<hr>';
 
-?><h2><a href="/cov" target="_blank">Coverage</a></h2>
+$d = explode('\\', __DIR__);
+$d = end($d);
+?><h2><a href="//<?= $d ?>/cov" target="_blank">Coverage</a></h2>
