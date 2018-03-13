@@ -52,4 +52,10 @@ class FragmentCaching {
     echo $value;
   }
 
+  public function cacheIf($condition, $key, Callable $callback) {
+    if ($condition === FALSE)
+      $callback();
+    else
+      $this->cache($key, $callback);
+  }
 }

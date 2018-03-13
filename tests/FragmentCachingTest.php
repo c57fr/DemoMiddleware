@@ -117,5 +117,30 @@ class FragmentCachingTest extends TestCase {
     return new FragmentCaching($cacheAdapter);
   }
 
+  public function testCacheIfWithFalseCondition() {
+
+    $cache = $this->getMockBuilder(FragmentCaching::class)
+      ->setConstructorArgs([new FakeCacheAdapter()])
+      ->setMethods(['cache'])
+      ->getMock();
+    $cache->expects($this->never())->method('cache');
+    $this->expectOutputString('salut');
+    $cache->cacheIf(FALSE, 'key', function () {
+      echo 'salut';
+    });
+  }
+
+  public function testCacheIfWithTrueeCondition() {
+
+    $cache = $this->getMockBuilder(FragmentCaching::class)
+      ->setConstructorArgs([new FakeCacheAdapter()])
+      ->setMethods(['cache'])
+      ->getMock();
+    $cache->expects($this->once())->method('cache');
+    $cache->cacheIf(TRUE, 'key', function () {
+      echo 'salut';
+    });
+  }
+
 }
 
