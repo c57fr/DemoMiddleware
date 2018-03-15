@@ -1,8 +1,10 @@
 <?php namespace App;
 
 use GuzzleHttp\Psr7\Response;
+use Interop\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+//use Psr\Http\Server\RequestHandlerInterface;
 
 /**
  * Class Dispatcher
@@ -11,7 +13,7 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  * @code Coverage Ignore
  */
-class Dispatcher {
+class Dispatcher implements RequestHandlerInterface{
   /**
    * @var array
    */
@@ -42,13 +44,13 @@ class Dispatcher {
    * @param ResponseInterface $response
    * @return ResponseInterface
    */
-  public function process(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface {
+  public function process(ServerRequestInterface $request): ResponseInterface {
     $middleware = $this->getMiddleware();
     $this->index++;
     if (is_null($middleware))
-      return $response;
+      return $this->response;
     if (is_callable($middleware))
-      return $middleware($request, $response, [$this, 'process']);
+      return $middleware($request, $this->response, [$this, 'process']);
     elseif ($middleware instanceof MiddlewareInterface)
       return $middleware->process($request, $this);
   }
@@ -60,4 +62,21 @@ class Dispatcher {
     return null;
   }
 
+  /**
+   * Handle the request and return a response.
+   *
+   * @param ServerRequestInterface $request
+   *
+   * @return ResponseInterface
+   */
+  public function handle(ServerRequestInterface $request):ResponseInterface {
+    $middleware = $this->getMiddleware();
+    $this->index++;
+    if (is_null($middleware))
+      return $response;
+    if (is_callable($middleware))
+      return $middleware($request, $response, [$this, 'process']);
+    elseif ($middleware instanceof MiddlewareInterface)
+      return $middleware->handle($request, $this);
+  }
 }

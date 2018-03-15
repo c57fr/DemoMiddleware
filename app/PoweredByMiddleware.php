@@ -1,13 +1,17 @@
 <?php namespace App;
 
+use Interop\Http\Server\MiddlewareInterface;
 use Interop\Http\Server\RequestHandlerInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Class PoweredByMiddleware
  * @package App
  */
-class PoweredByMiddleware {
-  public function __invoke($request, $response, callable $next) {
-    return $next($request, $response->withHeader('X-Powered-By', 'GC7'));
+class PoweredByMiddleware implements MiddlewareInterface {
+
+  public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) {
+    $response = $handler->handle($request);
+    return $response->withHeader('X-Powered-By', 'GC7');
   }
 }
