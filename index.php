@@ -63,12 +63,12 @@ $app = function (ServerRequestInterface $request, ResponseInterface $response, c
     $response->getBody()->write('Not found');
     $response = $response->withStatus(404);
   }
-  $response = $response->withAddedHeader('X-Powered-By', 'Gc7');
   return $response;
 };
 
 $dispatcher = new Dispatcher();
 $dispatcher->pipe($trailingSlashMiddleware);
+$dispatcher->pipe(new \App\PoweredByMiddleware());
 $dispatcher->pipe($menuMiddleware);
 $dispatcher->pipe($quoteMiddleware);
 $dispatcher->pipe($app);
