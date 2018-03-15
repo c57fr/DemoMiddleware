@@ -67,8 +67,8 @@ $app = function (ServerRequestInterface $request, ResponseInterface $response, c
 };
 
 $dispatcher = new Dispatcher();
-$dispatcher->pipe($trailingSlashMiddleware);
 $dispatcher->pipe(new \App\PoweredByMiddleware());
+$dispatcher->pipe($trailingSlashMiddleware);
 $dispatcher->pipe($menuMiddleware);
 $dispatcher->pipe($quoteMiddleware);
 $dispatcher->pipe($app);
