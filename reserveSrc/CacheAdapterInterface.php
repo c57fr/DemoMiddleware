@@ -1,4 +1,4 @@
-<?php namespace App;
+<?php namespace Gc7;
 
 
 interface CacheAdapterInterface {

@@ -1,6 +1,6 @@
 <?php
 use Gc7\FragmentCaching;
-use App\CacheAdapterInterface;
+use Gc7\CacheAdapterInterface;
 use PHPUnit\Framework\TestCase;
 
 class FakeCacheAdapter implements CacheAdapterInterface {
@@ -30,6 +30,19 @@ class FakeModel {
 }
 
 class FragmentCachingTest extends TestCase {
+
+  public function testConstructorCache() {
+
+    // Le test échoue car c'est le bon type d'objet
+    // $adapter= new FakeCacheAdapter();
+    $adapter = new StdClass();
+
+    $this->expectException(TypeError::class);
+    $cache = new FragmentCaching($adapter);
+
+
+
+  }
 
   public function testCacheWithCache() {
     $cache = $this->getInstanceWithOutExpectedGet('en cache');
@@ -102,6 +115,7 @@ class FragmentCachingTest extends TestCase {
     $cacheAdapter = $this->getMockBuilder(FakeCacheAdapter::class)
       ->setMethods(['get'])
       ->getMock();
+
     $cacheAdapter->method('get')->willReturn($value);
 
     return new FragmentCaching($cacheAdapter);
@@ -130,7 +144,7 @@ class FragmentCachingTest extends TestCase {
     });
   }
 
-  public function testCacheIfWithTrueeCondition() {
+  public function testCacheIfWithTrueCondition() {
 
     $cache = $this->getMockBuilder(FragmentCaching::class)
       ->setConstructorArgs([new FakeCacheAdapter()])

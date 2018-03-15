@@ -1,5 +1,5 @@
 <?php namespace Gc7;
-use App\CacheAdapterInterface;
+use Gc7\CacheAdapterInterface;
 
 
 /**
