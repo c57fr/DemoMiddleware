@@ -30,7 +30,7 @@ class DataTest extends TestCase {
       'adding zeros'  => [0, 0, 0],
       'zero plus one' => [0, 1, 1],
       'one plus zero' => [1, 0, 1],
-      'one plus one'  => [1, 2, 3]
+      'one plus two'  => [1, 2, 3]
     ];
   }
 

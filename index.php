@@ -20,8 +20,8 @@ $url = (string)$request->getUri()->getPath();
 
 $trailingSlashMiddleware = function (ServerRequestInterface $request, ResponseInterface $response, callable $next) use ($url) {
   $response = new Response();
-  if (strlen($url)-1 && $url[-1] === '/') {
-    $url= ($url==='/')?$url:substr($url, 0, -1);
+  if (strlen($url) - 1 && $url[-1] === '/') {
+    $url = ($url === '/') ? $url : substr($url, 0, -1);
     return $response->withHeader('Location', $url)
       ->withStatus(301);
   }
@@ -63,7 +63,7 @@ $app = function (ServerRequestInterface $request, ResponseInterface $response, c
     $response->getBody()->write('Not found');
     $response = $response->withStatus(404);
   }
-  $response= $response->withHeader('X-Powered-By', 'Gc7');
+  $response = $response->withAddedHeader('X-Powered-By', 'Gc7');
   return $response;
 };
 
