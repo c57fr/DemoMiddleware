@@ -1,8 +1,8 @@
 <?php namespace App;
-
-use Interop\Http\Server\MiddlewareInterface;
-use Interop\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+
 
 /**
  * Class PoweredByMiddleware
@@ -10,8 +10,13 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 class PoweredByMiddleware implements MiddlewareInterface {
 
-  public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) {
+  /**
+   * Process an incoming server request and return a response, optionally delegating
+   * response creation to a handler.
+   */
+  public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface {
     $response = $handler->handle($request);
     return $response->withHeader('X-Powered-By', 'GC7');
   }
+
 }

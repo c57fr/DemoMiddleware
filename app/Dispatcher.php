@@ -1,19 +1,20 @@
 <?php namespace App;
-
+//
 use GuzzleHttp\Psr7\Response;
-use Interop\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 //use Psr\Http\Server\RequestHandlerInterface;
+//use Interop\Http\Server\RequestHandlerInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 /**
  * Class Dispatcher
  * @property Response response
  * @package App
  *
- * @code Coverage Ignore
+ * @code    Coverage Ignore
  */
-class Dispatcher implements RequestHandlerInterface{
+class Dispatcher implements RequestHandlerInterface {
   /**
    * @var array
    */
@@ -41,25 +42,31 @@ class Dispatcher implements RequestHandlerInterface{
    * Permet d'éxecuter les middlewares
    *
    * @param ServerRequestInterface $request
-   * @param ResponseInterface $response
+   * @param ResponseInterface      $response
+   *
    * @return ResponseInterface
    */
   public function process(ServerRequestInterface $request): ResponseInterface {
     $middleware = $this->getMiddleware();
     $this->index++;
-    if (is_null($middleware))
+    if (is_null($middleware)) {
+//      $this->response->getBody()->write('ooo');
       return $this->response;
-    if (is_callable($middleware))
+    }
+    if (is_callable($middleware)) {
       return $middleware($request, $this->response, [$this, 'process']);
-    elseif ($middleware instanceof MiddlewareInterface)
+    } elseif
+    ($middleware instanceof MiddlewareInterface
+    ) {
       return $middleware->process($request, $this);
+    }
   }
 
   private function getMiddleware() {
     // todoli test ??
     if (isset($this->middlewares[$this->index]))
       return $this->middlewares[$this->index];
-    return null;
+    return NULL;
   }
 
   /**
@@ -73,10 +80,10 @@ class Dispatcher implements RequestHandlerInterface{
     $middleware = $this->getMiddleware();
     $this->index++;
     if (is_null($middleware))
-      return $response;
+      return $this->response;
     if (is_callable($middleware))
-      return $middleware($request, $response, [$this, 'process']);
+      return $middleware($request, $this->response, [$this, 'process']);
     elseif ($middleware instanceof MiddlewareInterface)
-      return $middleware->handle($request, $this);
+      return $middleware->process($request);
   }
 }
